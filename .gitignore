@@ -1,5 +1,5 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
+*__pycache__/
 *.py[cod]
 *$py.class
 
@@ -55,6 +55,9 @@ coverage.xml
 local_settings.py
 dsc_env/
 dsc/settings.py
+dsc/__pycache__/
+dsc/__init__.py
+*.pyc
 
 # Flask stuff:
 instance/
