@@ -6,7 +6,6 @@
 <title>Data</title>
 
 {% load static %}
-<link rel="stylesheet" href="{% static 'classy/clusterize.css' %}"/>
 <link rel="shortcut icon" href="{% static 'classy/watching.jpg' %}" type="image/x-icon">
 <link rel="icon" href="{% static 'classy/watching.jpg' %}" type="image/x-icon">
 
@@ -44,12 +43,18 @@
 </div>
 </div>
 
+<form class="form-group" action="search">
+
 <div class="container-fluid">
 <div class="row">
         <div class="col-sm-2">
 	<br/><br/>
-	<form class="form-inline">
+<!--	<form class="form-inline">-->
 	<label for="sizi">Show</label>
+	<div class="input-group">
+	{{form.size}}
+	</div>
+	<!--
 	<select class="custom-select custom-select-sm" id="sizi">
 		<option selected>{{size}}</option>
 		{% for siz in sizes %}
@@ -57,11 +62,11 @@
 			<option value="{{siz}}">{{siz}}</option>
 		{% endif %}
 		{% endfor %}
-	</select>
-	</form>
+	</select>-->
+<!--	</form>-->
         </div>
         <div class="col-sm-8">
-	<form class="form-group" style="margin-bottom: 0px;" action="search" method="GET">
+<!--	<form class="form-group" style="margin-bottom: 0px;" action="search" method="GET">-->
 	<div class="input-group">	
 	{{form.query}}
 	<span class="input-group-btn">
@@ -76,7 +81,7 @@
 	<nav class="nav justify-content-center">
 		<a class="nav-link cus-link active" data-toggle="modal" data-target="#adModal" href="">Advanced Search</a>
 	</nav>	
-	</form>
+<!--	</form>-->
 	</div>
         <div class="col"></div>
 </div>
@@ -91,7 +96,7 @@
 				<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form action="search" method="GET">
+<!--			<form action="search" method="GET">-->
 			<div class="modal-body">	
 			<div class="form-group">
 				<label for="data_source">Datasource</label>
@@ -121,10 +126,13 @@
 			<div class="modal-footer">
 				<button type="submit" class="btn btn-success">Search</button>
 			</div>
-			</form>
+<!--			</form>-->
 		</div>
 	</div>
 </div>
+
+</form>
+
 <div class="modal fade" id="confModal" tabindex="-1" role="dialog" aria-labelledby="modalBo" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -271,12 +279,12 @@
 <nav aria-label="Page navigation example">
   <ul class="pagination">
 {% if not queryset.has_previous %}
-    <li class="page-item disabled"><a class="page-link" href="#">1</a></li>
+    <li class="page-item disabled"><a class="page-link" href="#">First ...</a></li>
     <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
 {% else %}
     <li class="page-item"><a class="page-link" href="?page=1&query={{query}}&data_source={{ds}}&schema={{sch}}&table={{tab}}
-                &column={{co}}&classi={{classi}}">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                &column={{co}}&classi={{classi}}">First ...</a></li>
+    <li class="page-item"><a class="page-link" href="#">{{queryset.previous_page_number}}</a></li>
 {% endif %}
 
     <li class="page-item active"><a class="page-link" href="#">{{queryset.number}}</a></li>

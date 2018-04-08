@@ -39,6 +39,15 @@ class advancedSearch(forms.Form):
 		('Pending', 'Pending'),
 	)
 	stati = forms.MultipleChoiceField(required=False, choices=state_choices, widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
+	#size for pagination
+	size_choices = (
+		(10, '10 (default)'),
+		(25, '25'),
+		(50, '50'),
+		(100, '100'),
+	)
+	size = forms.ChoiceField(required=False, choices=size_choices, widget=forms.Select(attrs={'class': 'form-control'}))
+
 
 class loginform(forms.Form):
 	username = forms.CharField(label='username', max_length=100, widget=forms.TextInput(attrs={
