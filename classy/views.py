@@ -235,24 +235,28 @@ def search(request):
 				tab = form.cleaned_data['table']
 				co = form.cleaned_data['column']
 				classi = form.cleaned_data['classi']
-				state = form.cleaned_data['stati']
+				stati = form.cleaned_data['stati']
+				print(stati)				
+
 				
-				sql = classification.objects.filter(column_name__contains=co, table_name__contains=tab, schema__contains=sch, datasource_description__contains=ds, classification_name__contains=classi);	
+
+				sql = classification.objects.filter(column_name__contains=co, table_name__contains=tab, schema__contains=sch, datasource_description__contains=ds, classification_name__contains=classi, state__contains=stati);	
 				queryset = sql
 			queryset = queryset.exclude(state__exact='Inactive')
 			queryset = queryset.order_by('datasource_description', 'schema', 'table_name')
 			size = 10
 			if 'size' in request.GET:
 				size = request.GET['size']
-				page = 1;
-			else:
+			if 'page' in request.GET:
 				page = request.GET.get('page')
+			else:
+				page = 1
 
 			paginator = Paginator(queryset, size)
 			query = paginator.get_page(page)
 
-			form = advancedSearch()
-			
+			form = advancedSearch(initial={'size': size})
+	
 			context = {
 				'num': num,
 				'form': form,

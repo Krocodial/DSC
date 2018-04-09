@@ -41,12 +41,12 @@ class advancedSearch(forms.Form):
 	stati = forms.MultipleChoiceField(required=False, choices=state_choices, widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
 	#size for pagination
 	size_choices = (
-		(10, '10 (default)'),
+		(10, '10'),
 		(25, '25'),
 		(50, '50'),
 		(100, '100'),
 	)
-	size = forms.ChoiceField(required=False, choices=size_choices, widget=forms.Select(attrs={'class': 'form-control'}))
+	size = forms.ChoiceField(required=False, choices=size_choices, widget=forms.Select(attrs={'class': 'custom-select custom-select-sm'}))
 
 
 class loginform(forms.Form):

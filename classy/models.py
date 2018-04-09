@@ -23,12 +23,12 @@ class classification(models.Model):
     created_by = models.CharField(max_length=50, null=True)
 
     state_choices = (
-    ('Active', 0),
-    ('Inactive', 1),
-    ('Pending Review', 2),
+    ('Active', 'Active'),
+    ('Inactive', 'Inactive'),
+    ('Pending', 'Pending'),
     )
 
-    state = models.CharField(max_length=15, choices=state_choices, default=0)
+    state = models.CharField(max_length=15, choices=state_choices, null=True)
 
     #date_added = models.DateTimeField(auto_now_add=True)
     #date_last_updated = models.DateTimeField(auto_now=True)

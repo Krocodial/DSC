@@ -58,6 +58,7 @@ dsc/settings.py
 dsc/__pycache__/
 dsc/__init__.py
 *.pyc
+*.swp
 
 # Flask stuff:
 instance/
