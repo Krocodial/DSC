@@ -2,15 +2,15 @@
 <html>
 <head>
 <title>Home</title>
-<meta charset='UTF-8'>
-<meta name="viewport" content="width=device-width, intitial-scale=1, shrink-to-fit=no">
+<!--<meta charset='UTF-8'>
+<meta name="viewport" content="width=device-width, intitial-scale=1, shrink-to-fit=no">-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
 {% load static %}
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-<link rel="stylesheet" href="{% static 'classy/style.css' %}">
-<link rel="stylesheet" href="{% static 'classy/home.css' %}">
+<link rel="stylesheet" href="{% static 'classy/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'classy/css/home.css' %}">
 
 </head>
 <body>
@@ -37,13 +37,13 @@
 </div>
 <div class="col"></div>
 <div class="col-sm-6">
-<canvas id="myChart"></canvas>
+<canvas id="pieChart"></canvas>
 </div>
 </div>
 </div>
 
 <script>
-var ctx = document.getElementById("myChart");
+var ctx = document.getElementById("pieChart");
 
 var labelz = [];	
 
