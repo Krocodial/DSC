@@ -221,7 +221,8 @@ def search(request):
 	if request.method == 'GET':
 		form = advancedSearch(request.GET)
 		if form.is_valid():
-			value=ds=sch=tab=co=classi=''
+			value=ds=sch=tab=co=''
+			classi=stati=[]
 			if(form.cleaned_data['query'] != ''):
 				value = form.cleaned_data['query']
 				cols = classification.objects.filter(column_name__contains=value);
@@ -229,20 +230,22 @@ def search(request):
 				schemas = classification.objects.filter(schema__contains=value);
 				data = classification.objects.filter(datasource_description__contains=value);
 				queryset = cols | tabs | schemas | data
+				queryset = queryset.exclude(state__exact='Inactive')
 			else:
 				ds = form.cleaned_data['data_source']
 				sch = form.cleaned_data['schema']
 				tab = form.cleaned_data['table']
 				co = form.cleaned_data['column']
 				classi = form.cleaned_data['classi']
-				stati = form.cleaned_data['stati']
-				print(stati)				
-
-				
-
-				sql = classification.objects.filter(column_name__contains=co, table_name__contains=tab, schema__contains=sch, datasource_description__contains=ds, classification_name__contains=classi, state__contains=stati);	
+				stati = form.cleaned_data['stati']	
+				if len(stati) == 0:
+					stati = ['Active', 'Pending']
+				if len(classi) == 0:
+					classi = options
+				#if len(classi) == 0:
+				#	classi = []
+				sql = classification.objects.filter(column_name__contains=co, table_name__contains=tab, schema__contains=sch, datasource_description__contains=ds, classification_name__in=classi, state__in=stati);	
 				queryset = sql
-			queryset = queryset.exclude(state__exact='Inactive')
 			queryset = queryset.order_by('datasource_description', 'schema', 'table_name')
 			size = 10
 			if 'size' in request.GET:
@@ -251,12 +254,10 @@ def search(request):
 				page = request.GET.get('page')
 			else:
 				page = 1
-
 			paginator = Paginator(queryset, size)
 			query = paginator.get_page(page)
 
 			form = advancedSearch(initial={'size': size})
-	
 			context = {
 				'num': num,
 				'form': form,
@@ -268,6 +269,7 @@ def search(request):
 				'table': tab,
 				'column': co,
 				'classi': classi,
+				'stati': stati,
 				'size': size,
 				'sizes': sizes
 			}

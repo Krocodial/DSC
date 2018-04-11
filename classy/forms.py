@@ -18,7 +18,6 @@ class thread:
 class advancedSearch(forms.Form):
 	
 	classi_choices = (
-		('', 'All (default)'),
 		('Unclassified', 'Unclassified'),
 		('PUBLIC', 'PUBLIC'),
 		('CONFIDENTIAL', 'CONFIDENTIAL'),
@@ -30,10 +29,11 @@ class advancedSearch(forms.Form):
 	schema = forms.CharField(required=False, label='Schema', max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
 	table = forms.CharField(required=False, label='Table', max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
 	column = forms.CharField(required=False, label='Column', max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-	classi = forms.ChoiceField(required=False, choices=classi_choices, widget=forms.Select(attrs={'class': 'form-control'}))
+	#classi = forms.ChoiceField(required=False, choices=classi_choices, widget=forms.Select(attrs={'class': 'form-control'}))
+	classi = forms.MultipleChoiceField(required=False, choices=classi_choices, widget=forms.SelectMultiple(attrs={'class':'form-control'}))
+
 	query = forms.CharField(required=False, max_length=150, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'What would you like to search for?', 'aria-describedby': 'descript'}))
 	state_choices = (
-		('', 'Active/Pending (default)'),
 		('Inactive', 'Inactive'),
 		('Active', 'Active'),
 		('Pending', 'Pending'),
