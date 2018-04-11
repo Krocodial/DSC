@@ -12,8 +12,10 @@
 <link rel="stylesheet" href="{% static 'classy/css/style.css' %}">
 <link rel="stylesheet" href="{% static 'classy/css/home.css' %}">
 
+{% include 'classy/head.html' %}
+
 </head>
-<body>
+<body id="bootstrapoverride">
 {% include 'classy/navbar.html' %}
 <br/>
 <div class="container-fluid">

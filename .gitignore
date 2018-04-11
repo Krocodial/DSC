@@ -15,8 +15,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
 parts/
 sdist/
 var/
@@ -53,7 +51,6 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
-*env*
 *__pycache__*
 *.pyc
 *.swp

@@ -14,8 +14,10 @@
 
 <link rel="stylesheet" href="{% static 'classy/css/style.css' %}"/>
 
+{% include 'classy/head.html' %}
+
 </head>
-<body id="bootstrap-override">
+<body id="bootstrapoverride">
 
 {% include 'classy/navbar.html' %}
 <br/>
@@ -210,10 +212,10 @@
 	<thead class="thead-inverse">
 		<tr>
 			<th></th>
-			<th>Datasource</th>
-			<th>Schema</th>
-			<th>Table</th>
-			<th>Column</th>
+			<th class='th-cus'>Datasource</th>
+			<th class='th-cus'>Schema</th>
+			<th class='th-cus'>Table</th>
+			<th class='th-cus'>Column</th>
 		</tr>
 	</thead>
 
@@ -332,7 +334,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
-<script src="{% static 'classy/custom.js' %}"></script>
+<script src="{% static 'classy/js/custom.js' %}"></script>
 
 <script>
 /*

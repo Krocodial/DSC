@@ -12,10 +12,10 @@
 <link rel="shortcut icon" href="{% static 'classy/images/watching.jpg' %}" type="image/x-icon">
 <link rel="icon" href="{% static 'classy/images/watching.jpg' %}" type="image/x-icon">
 
-
+{% include 'classy/head.html' %}
 
 </head>
-<body>
+<body id='bootstrapoverride'>
 {% include 'classy/navbar.html' %}
 
 {% if message %}
@@ -52,11 +52,11 @@
 <table class="table table-sm">
 <thead style="color:#fff;" class="thead-inverse">
 	<tr>
-		<th>Current jobs</th>
-		<th>Status</th>
-		<th>Uploaded</th>
-		<th>Time in Queue</th>
-		<th>User</th>
+		<th class="th-cus">Current jobs</th>
+		<th class="th-cus">Status</th>
+		<th class="th-cus">Uploaded</th>
+		<th class="th-cus">Time in Queue</th>
+		<th class="th-cus">User</th>
 	</tr>
 </thead>
 <tbody>
