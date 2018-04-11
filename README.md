@@ -13,14 +13,14 @@ Python==3.5.2
 ## Third-Party Products/Libraries used and the the License they are covered by
 psycopg2==2.7.3.2 -- (http://initd.org/psycopg/license/)  
 pytz==2017.3 -- Covered by the MIT license (https://pypi.python.org/pypi/pytz)  
-mysqlclient
-libmysqlclient-dev
-python3-venv
-python3-pip
-apache2
-apache2-dev
-libapache2-mod-wsgi-py3
-(or another HTTP server with python 3 interface)
+mysqlclient  
+libmysqlclient-dev  
+python3-venv  
+python3-pip  
+apache2  
+apache2-dev  
+libapache2-mod-wsgi-py3  
+(or another HTTP server with python 3 interface)  
 
 ## Project Status
 In-Development  
@@ -35,7 +35,7 @@ Authentication & Authorization are handled by Django's built in security. Howeve
 Policies for use will be provided by the FLNR security team.  
 
 ## Files in this repository
-Note: This is just a directory tree.
+Note: This is just a directory tree.  
 ```
 classy/	
 ├── classy			-The app itself, model definitions, views, templates, scripts, etc.
@@ -71,19 +71,19 @@ classy/
 
 ## Deployment (Local Development)
 
-Using apt or another package manager install
-*libmysqlclient-dev
-*python3-venv
-*python3-pip
-*apache2
-*apache2-dev
-*libapache2-mod-wsgi-py3
+Using apt or another package manager install  
+*libmysqlclient-dev  
+*python3-venv  
+*python3-pip  
+*apache2  
+*apache2-dev  
+*libapache2-mod-wsgi-py3  
 
 * Since the rest of the dependencies are contained in a virtual environment the only requirement is to be able to activate this localized environment. See (https://virtualenv.pypa.io/en/stable/) for setup instructions. Command to activate the environment is 'source env/bin/activate')
 
-* Create environment variables with corresponding variable names in dsc/settings.py. These include you database credentials, secret, and host IP
+* Create environment variables with corresponding variable names in dsc/settings.py. These include you database credentials, secret, and host IP  
 
-* Create a configuration based on the projects location for apache2, eg in /etc/apache2/sites-available. See the Django docs about deploying, they are very detailed.
+* Create a configuration based on the projects location for apache2, eg in /etc/apache2/sites-available. See the Django docs about deploying, they are very detailed.  
 
 
 ## Deployment (OpenShift)
