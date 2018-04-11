@@ -53,12 +53,11 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
-dsc_env/
-dsc/settings.py
-dsc/__pycache__/
-dsc/__init__.py
+*env*
+*__pycache__*
 *.pyc
 *.swp
+*__init__*
 
 # Flask stuff:
 instance/
