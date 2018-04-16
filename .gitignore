@@ -55,6 +55,7 @@ local_settings.py
 *.pyc
 *.swp
 *__init__*
+*files/
 
 # Flask stuff:
 instance/
