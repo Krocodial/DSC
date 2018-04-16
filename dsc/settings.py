@@ -123,3 +123,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+MEDIA_URL = 'classy/tmp/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'classy/tmp')
+FILE_UPLOAD_TEMP_DIR = os.path.join(BASE_DIR, 'classy/tmp')

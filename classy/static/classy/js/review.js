@@ -21,8 +21,6 @@ denied = [];
 
 $(document).on('click', '.remo', function() {
 	var row = $(this).closest('tr');
-	//console.log(row.index());	
-	console.log(event.target.id);
 	denied.push(event.target.id);
 	row.remove();
 });

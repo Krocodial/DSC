@@ -14,6 +14,7 @@ class thread:
 		self.state = state
 		self.uptime = 0
 		self.user = user
+		self.progress = 0
 
 class advancedSearch(forms.Form):
 	

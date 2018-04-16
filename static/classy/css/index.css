@@ -8,17 +8,18 @@
 	padding: 26px 26px;
 }
 
-.headers {
-	padding: 0px 10px;
+#bootstrapoverride {
 	background-color:#417690;
-	color:#fff;
-	padding: 20px 0px;
+	color:#f5dd5d;
+	padding: 20px 20px;
 }
+
 
 .text-faint {
 	color:#F1F1F2;
 }
 
 .blue-submit {
-	color:#79aec8;
+	background-color:#79aec8;
+	border-color:#79aec8;
 }

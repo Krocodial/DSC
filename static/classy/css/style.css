@@ -14,12 +14,17 @@ td {
 }
 
 .thead-inverse tr th {
-	background-color: #417690;
+	background-color: #79aec8;
 	color: #fff;
 }
 
+#bootstrapoverride {
+	/*font-family: 'Dosis', sans-serif;*/
+	font-family: 'Roboto', sans-serif;
+}
+
 .navbar {
-	background-color: #003366;
+	background-color: #417690;/*#003366;*/
 }
 
 .btn-cus {

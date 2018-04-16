@@ -4,6 +4,19 @@ from django.utils import timezone
 
 # Create your models here.
 
+class classification_count(models.Model):
+    classification_choices = (
+	('Unclassified', 'unclassified'),
+	('PUBLIC', 'public'),
+	('CONFIDENTIAL', 'confidential'),
+	('PROTECTED A', 'protected_a'),
+	('PROTECTED B', 'protected_b'),
+	('PROTECTED C', 'protected_c'),
+    )
+    classification_name = models.CharField(max_length=50, choices=classification_choices, null=True)
+    count = models.IntegerField()
+    date = models.DateField()
+
 class classification(models.Model):
     classification_choices = (
 	('Unclassified', 'unclassified'),

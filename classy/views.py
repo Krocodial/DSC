@@ -11,15 +11,18 @@ from django.contrib.auth import authenticate, login, logout
 from django import forms
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils.safestring import mark_safe
+from django.utils import timezone
+from django.utils.dateparse import *
 
-import threading, time, datetime
-from pytz import timezone
+import threading, time#, datetime
+#from pytz import timezone
 import pytz
 import json
+#from datetime import datetime, timedelta
 
 from .forms import UploadFileForm, thread, advancedSearch, loginform#, Search
-from .models import classification, classification_logs, classification_review, classification_review_groups
-from .scripts import create_thread, parent, example
+from .models import classification, classification_logs, classification_review, classification_review_groups, classification_count
+from .scripts import create_thread, parent, example, calculate_count
 
 options = ['CONFIDENTIAL', 'PUBLIC', 'Unclassified', 'PROTECTED A', 'PROTECTED B', 'PROTECTED C'];
 threads = []
@@ -42,27 +45,36 @@ def review(request):
 				user = group_info.user
 				group_set = classification_review.objects.filter(group__exact=groupi)
 
-				for row in group_set:
-					item = classification.objects.get(id=row.classy.id)
+				for tup in group_set:
+					print(tup.classy.id)
+					if str(tup.classy.id) in den:
+						print('yes')
+						pass
 					#modify
-					if row.action_flag == 1:
-						if row.classification_name in options and row.id not in den:
-							log = classification_logs(classy = item, action_flag = 1, n_classification = row.classification_name, o_classification=row.o_classification, user_id = user, state='Active')
-							item.classification_name = row.classification_name
-							item.o_classification = row.o_classification
+					elif tup.action_flag == 1:
+						if tup.classification_name in options:
+
+							item = classification.objects.get(id=tup.classy.id)
+							log = classification_logs(classy = item, action_flag = 1, n_classification = tup.classification_name, o_classification=tup.o_classification, user_id = user, state='Active')
+							item.classification_name = tup.classification_name
+							item.o_classification = tup.o_classification
+							item.state = 'Active'
 
 							log.save()
 							item.save()
 					#delete
-					if row.action_flag == 0:
-						if row.id not in den:
-							log = classification_logs(classy = item, action_flag = 0, n_classification = 'N/a', o_classification = row.o_classification, user_id = user, state='Inactive')
-							item.state = 'InActive'
+					elif tup.action_flag == 0:
+						item = classification.objects.get(id=tup.classy.id)
+						log = classification_logs(classy = item, action_flag = 0, n_classification = 'N/a', o_classification = tup.o_classification, user_id = user, state='Inactive')
+						item.state = 'Inactive'
 	
-							log.save()
-							item.save()
+						log.save()
+						item.save()
+					else:
+						print('unexpected value')
+						
 				
-					row.delete()
+					tup.delete()
 
 				group_info.delete()
 				
@@ -316,35 +328,80 @@ def index(request):
 def home(request):
 	if not request.user.is_authenticated:
 		return redirect('index')
-	queryset = classification_logs.objects.all().order_by('action_time')[:10]
+	data_cons = []
+	mapping = {}
 
+	for op in options:
+		tmp = classification.objects.filter(classification_name__exact=op).count()
+		data_cons.append(tmp)
+		mapping[op] = tmp
+	'''
 	unclassified = classification.objects.filter(classification_name__exact='Unclassified').count()
 	public = classification.objects.filter(classification_name__exact='PUBLIC').count()
 	confidential = classification.objects.filter(classification_name__exact='CONFIDENTIAL').count()
 	protected_a = classification.objects.filter(classification_name__exact='PROTECTED A').count()
 	protected_b = classification.objects.filter(classification_name__exact='PROTECTED B').count()
 	protected_c = classification.objects.filter(classification_name__exact='PROTECTED C').count()
-
+	'''
 	num = classification_review_groups.objects.all().count()
 
-	data_cons = [unclassified, public, confidential, protected_a, protected_b, protected_c]
-	label_cons = ["unclassified", 'public', 'confidential', 'protected a', 'protected b', 'protected c']
+	#data_cons = [unclassified, public, confidential, protected_a, protected_b, protected_c]
+	label_cons = options#["unclassified", 'public', 'confidential', 'protected a', 'protected b', 'protected c']
+	
+	#Line Graph
+	d = datetime.datetime.now() - datetime.timedelta(days=10)	
+	#d = timezone.now().date() - timedelta(days=14)	
+	linee = classification_count.objects.filter(date__gte=d)
+
+	if linee.count() < 10:
+		vals = calculate_count(classification_logs.objects.filter(action_time__gte=d), mapping)	
+		vals = classification_count.objects.filter(date__gte=d)
+	else: 
+		vals = linee
+
+	
+	dates = vals.values('date').order_by('date').distinct()
+
+	assoc = {}	
+
+	unclassified = vals.filter(classification_name__exact='Unclassified').order_by('date')
+	public = vals.filter(classification_name__exact='PUBLIC').order_by('date')
+	confidential = vals.filter(classification_name__exact='CONFIDENTIAL').order_by('date')
+	protected_a = vals.filter(classification_name__exact='PROTECTED A').order_by('date')
+	protected_b = vals.filter(classification_name__exact='PROTECTED B').order_by('date')
+	protected_c = vals.filter(classification_name__exact='PROTECTED C').order_by('date')	
+
+	days = []
+	for i in dates:
+		days.append(i['date'].day)
+	#for date in dates:
+	#	print(date)
+		#days.append(date.day)
+
 	context = {
-		'queryset': queryset,
+		#'queryset': queryset,
 		'data_cons': data_cons,
 		'label_cons': mark_safe(label_cons),
-		'num': num
+		'num': num,
+		'dates': days,
+		'unc': unclassified,
+		'pub': public,
+		'conf': confidential,
+		'prota': protected_a,
+		'protb': protected_b,
+		'protc': protected_c
 	}
 	return render(request, 'classy/home.html', context);
 
 def uploader(request):
 	if not request.user.is_staff:
 		return redirect('index')
-
+	print(timezone.now().time())
 	num = classification_review_groups.objects.all().count()
 	for th in threads:
-		th.uptime = str(time.time() - th.start)
-		th.uptime = th.uptime[:4]
+		th.uptime = str(timezone.now() - th.start)
+		#time.time() - th.start)
+		th.uptime = th.uptime[:7]
 
 	if request.method == 'POST':
 		form = UploadFileForm(request.POST, request.FILES)
@@ -358,13 +415,16 @@ def uploader(request):
 					'message': message,
 					'num': num
 				}
-				return render(request, 'classy/jobs.html', context)
-			th = thread(f.name, time.time(), 'pending', request.user.username)
+				return render(request, 'classy/jobs.html', context, status=422)
+			th = thread(f.name, timezone.now(), 'pending', request.user.username)
+			#time.time()
 			threads.append(th)
-			t = threading.Thread(target=create_thread, args=(f, lock, th, threads, request.user.username))
-			th.startdate = datetime.datetime.now()
+			t = threading.Thread(target=create_thread, args=(request, lock, th, threads, request.user.username))
+			th.startdate = timezone.now()
+			#th.startdate = datetime.datetime.now()
 			t.start()
-
+		else:
+			return render(request, 'classy/jobs.html', {'form': UploadFileForm()}, status=422)
 		#if 'Myfile' in request.FILES: 
 		#	inp = request.FILES['Myfile']
 		#	th = thread(inp.name, time.time(), 'pending')
