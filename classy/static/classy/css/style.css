@@ -5,6 +5,30 @@ td {
 	-webkit-user-select: none; /* Webkit (Safari, Chrome) */
 }
 
+{% load static %}
+
+#wheel {
+    display:    none;
+    position:   fixed;
+    z-index:    1060;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .6 ) 
+                url('https://loading.io/spinners/spookyghost/index.spooky-ghost-ajax-preloader.svg') 
+                50% 50% 
+                no-repeat;
+}
+
+body.loading #wheel {
+	overflow: hidden;
+}
+
+body.loading #wheel {
+	display: block;
+}
+
 .navbar-light .navbar-nav .nav-link {
 	color: #fff;
 }
@@ -21,7 +45,7 @@ td {
 .business-header{
   height: 40vh !important;
   min-height: 300px;
-  background: url('http://placehold.it/1920x400') center center no-repeat scroll;
+  background: url('http://absarokarealty.com/wp-content/uploads/mountains.jpg') center center no-repeat scroll;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;

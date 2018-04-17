@@ -44,8 +44,9 @@
 <div class="col"></div>
 </div>
 </div>
+{% else %}
+<p class="text-center">No pending user changes</p>
 {% endif %}
-
 <div id="accordion">
 <!--<div class="card">-->
 <!--<ul class="list-group list-group-flush">-->
@@ -119,10 +120,12 @@
 <input type="hidden" name="response" value="success">
 </form>
 
-<form action="review" method="post" id="faig">
+<form action="review" method="post" id="fail">
 {% csrf_token %}
 <input type="hidden" name="response" value="failure">
 </form>
+
+<div class="modal" id="wheel"></div>
 
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>

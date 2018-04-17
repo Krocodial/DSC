@@ -39,45 +39,47 @@ def review(request):
 			message = request.POST['response']
 		else:
 			try:
-				den = json.loads(request.POST['denied'])
 				groupi = json.loads(request.POST['group'])
 				group_info = classification_review_groups.objects.get(id=groupi)
 				user = group_info.user
 				group_set = classification_review.objects.filter(group__exact=groupi)
+				if 'denied' in request.POST:
+					den = json.loads(request.POST['denied'])	
+					for tup in group_set:
+						if str(tup.classy.id) in den:
+							pass
+						#modify
+						elif tup.action_flag == 1:
+							if tup.classification_name in options:
+	
+								item = classification.objects.get(id=tup.classy.id)
+								log = classification_logs(classy = item, action_flag = 1, n_classification = tup.classification_name, o_classification=tup.o_classification, user_id = user, state='Active')
+								item.classification_name = tup.classification_name
+								item.o_classification = tup.o_classification
+								item.state = 'Active'
 
-				for tup in group_set:
-					print(tup.classy.id)
-					if str(tup.classy.id) in den:
-						print('yes')
-						pass
-					#modify
-					elif tup.action_flag == 1:
-						if tup.classification_name in options:
-
+								log.save()
+								item.save()
+						#delete
+						elif tup.action_flag == 0:
 							item = classification.objects.get(id=tup.classy.id)
-							log = classification_logs(classy = item, action_flag = 1, n_classification = tup.classification_name, o_classification=tup.o_classification, user_id = user, state='Active')
-							item.classification_name = tup.classification_name
-							item.o_classification = tup.o_classification
-							item.state = 'Active'
-
+							log = classification_logs(classy = item, action_flag = 0, n_classification = 'N/a', o_classification = tup.o_classification, user_id = user, state='Inactive')
+							item.state = 'Inactive'
+	
 							log.save()
 							item.save()
-					#delete
-					elif tup.action_flag == 0:
-						item = classification.objects.get(id=tup.classy.id)
-						log = classification_logs(classy = item, action_flag = 0, n_classification = 'N/a', o_classification = tup.o_classification, user_id = user, state='Inactive')
-						item.state = 'Inactive'
-	
-						log.save()
-						item.save()
-					else:
-						print('unexpected value')
+						else:
+							print('unexpected value')
 						
 				
-					tup.delete()
+						tup.delete()
 
-				group_info.delete()
-				
+					group_info.delete()
+					
+				else:
+					group_set.delete()
+					group_info.delete()
+
 				response = {'status': 1, 'message': 'ok'}
 				return HttpResponse(json.dumps(response), content_type='application/json')
 			except Exception as e:
@@ -360,8 +362,10 @@ def home(request):
 		vals = linee
 
 	
-	dates = vals.values('date').order_by('date').distinct()
-
+	dates = []
+	for tuple in vals:
+		if str(tuple.date) not in dates:
+			dates.append(str(tuple.date))
 	assoc = {}	
 
 	unclassified = vals.filter(classification_name__exact='Unclassified').order_by('date')
@@ -371,9 +375,8 @@ def home(request):
 	protected_b = vals.filter(classification_name__exact='PROTECTED B').order_by('date')
 	protected_c = vals.filter(classification_name__exact='PROTECTED C').order_by('date')	
 
-	days = []
-	for i in dates:
-		days.append(i['date'].day)
+	#for i in dates:
+	#	days.append(i)
 	#for date in dates:
 	#	print(date)
 		#days.append(date.day)
@@ -383,7 +386,7 @@ def home(request):
 		'data_cons': data_cons,
 		'label_cons': mark_safe(label_cons),
 		'num': num,
-		'dates': days,
+		'dates': dates,
 		'unc': unclassified,
 		'pub': public,
 		'conf': confidential,

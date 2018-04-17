@@ -329,6 +329,8 @@
 <input type="hidden" name="failure" value="failure">
 </form>
 
+<div class="modal" id="wheel"></div>
+
 <br/><br/>
 <!--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 -->
@@ -400,7 +402,15 @@ $('#delTable').on('click', 'button', function() {
       row.remove(); 
 });
 */
+
+$body = $('body');
+$(document).on({
+	ajaxStart: function() { $body.addClass('loading'); },
+	ajaxStop: function() { $body.removeClass('loading'); }
+});
+
 $(document).on('click', '#finSubby', function() {
+	$body.addClass('loading');
 	//alert(JSON.stringify(toDel));
 	$.ajax({
 		type: "POST",

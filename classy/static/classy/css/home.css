@@ -4,7 +4,11 @@
 
 }
 
+.business-header{
+	color: #f5dd5d;
+}
+
 #lineChart{
-		
+	height: 280px;		
 
 }

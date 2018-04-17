@@ -11,11 +11,11 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-
+{% include 'classy/head.html' %}
 <link rel="stylesheet" href="{% static 'classy/css/style.css' %}"/>
 <link rel="stylesheet" href="{% static 'classy/css/home.css' %}">
 
-{% include 'classy/head.html' %}
+
 
 </head>
 <body id="bootstrapoverride">
@@ -23,100 +23,94 @@
 {% include 'classy/navbar.html' %}
 
 
-    <!-- Header with Background Image -->
-    <header class="business-header">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <h3 class="text-center mt-4">Data Security Classification Repository</h3>
-		<!--<canvas id="lineChart"></canvas>-->		
-          </div>
-        </div>
-      </div>
-    </header>
+<!-- Header with Background Image -->
+<header class="business-header">
+<div class="container">
+<div class="row">
+  <div class="col-lg-12">
+    <h3 class="text-center mt-4">Welcome {{user}}</h3>
+	<!--<canvas id="lineChart"></canvas>-->		
+  </div>
+</div>
+</div>
+</header>
 
-    <!-- Page Content -->
-    <div class="container">
+<canvas id="lineChart" width="1280" height="280"></canvas>
 
-      <div class="row">
-        <div class="col-sm-8">
-          <h2 class="mt-4">What We Do</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A deserunt neque tempore recusandae animi soluta quasi? Asperiores rem dolore eaque vel, porro, soluta unde debitis aliquam laboriosam. Repellat explicabo, maiores!</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis optio neque consectetur consequatur magni in nisi, natus beatae quidem quam odit commodi ducimus totam eum, alias, adipisci nesciunt voluptate. Voluptatum.</p>
-          <p>
-            <a class="btn btn-primary btn-lg" href="#">Call to Action &raquo;</a>
-          </p>
-        </div>
-        <div class="col-sm-4">
-          <h2 class="mt-4">Contact Us</h2>
-          <address>
-            <strong>Start Bootstrap</strong>
-            <br>3481 Melrose Place
-            <br>Beverly Hills, CA 90210
-            <br>
-          </address>
-          <address>
-            <abbr title="Phone">P:</abbr>
-            (123) 456-7890
-            <br>
-            <abbr title="Email">E:</abbr>
-            <a href="mailto:#">name@example.com</a>
-          </address>
-        </div>
-      </div>
-      <!-- /.row -->
+<!-- Page Content -->
+<div class="container">
 
-      <div class="row">
-        <div class="col-sm-4 my-4">
-          <div class="card">
-            <img class="card-img-top" src="http://placehold.it/300x200" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Card title</h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus.</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">Find Out More!</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-4 my-4">
-          <div class="card">
-            <img class="card-img-top" src="http://placehold.it/300x200" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Card title</h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus totam ut praesentium aut.</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">Find Out More!</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-4 my-4">
-          <div class="card">
-            <img class="card-img-top" src="http://placehold.it/300x200" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Card title</h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">Find Out More!</a>
-            </div>
-          </div>
-        </div>
+<div class="row">
+<div class="col-sm-7">
+  <h2 class="mt-4">About this application</h2>
+  <p>The Data Security Classification application, known as DSC for short, is a tool developed by the Corporate Services for the Natural Resource ministries with 
+the purpose of keeping an inventory of the data that is managed, and where that data is stored. This tool will allow users to view high level information about 
+  tables, modify table classifications, upload new information, and flag deprecated data</p>
 
-      </div>
-      <!-- /.row -->
+  <p>This tool is managed by the FLNR security team, with custom access granted to business areas based on privilege. All changes will be reviewed and approved before 
+	they reflect in the main dataset. If you need access to a larger dataset due to business changes, please send a request to 
+<a href=''>CSNR@informationsecurityemail.com</a></p>
+<!--<p>
+    <a class="btn btn-primary btn-lg" href="#">Call to Action &raquo;</a>
+  </p>-->
+</div>
+<div class="col-sm-5">
+	<canvas id="pieChart"></canvas>
+</div>
+</div>
+<!-- /.row -->
 
+<div class="row">
+<div class="col-sm-4 my-4">
+  <div class="card">
+    <img class="card-img-top" src="https://www.nps.gov/whsa/learn/nature/images/mountain_pepperweed.JPG" alt="">
+    <div class="card-body">
+      <h4 class="card-title">Getting Started</h4>
+      <p class="card-text">Lost and not sure where to start? This page will give you a quick overview of DSC's main functionality.</p>
     </div>
-    <!-- /.container -->
+    <div class="card-footer">
+      <a href="#" class="btn btn-primary">Find Out More!</a>
+    </div>
+  </div>
+</div>
+<div class="col-sm-4 my-4">
+  <div class="card">
+    <img class="card-img-top" src="https://www.nps.gov/whsa/learn/nature/images/cottonwood.JPG" alt="">
+    <div class="card-body">
+      <h4 class="card-title">Classification information</h4>
+      <p class="card-text">Confused as to what the different classifications mean? Take a look at our Classification guide for examples, and in-depth descriptions.</p>
+    </div>
+    <div class="card-footer">
+      <a href="#" class="btn btn-primary">Find Out More!</a>
+    </div>
+  </div>
+</div>
+<div class="col-sm-4 my-4">
+  <div class="card">
+    <img class="card-img-top" src="https://www.nps.gov/seki/learn/nature/images/Sheep-WF-small.jpg" alt="">
+    <div class="card-body">
+      <h4 class="card-title">Issues</h4>
+      <p class="card-text">Found an issue in this application? Please take the time to send me a message using the link below.</p>
+    </div>
+    <div class="card-footer">
+      <a href="#" class="btn btn-primary">Find Out More!</a>
+    </div>
+  </div>
+</div>
 
-    <!-- Footer -->
-    <footer class="py-5 bg-dark">
-      <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
-      </div>
-      <!-- /.container -->
-    </footer>
+</div>
+<!-- /.row -->
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+<div class="container">
+<p class="m-0 text-center text-white">Copyright &copy; BC gov 2018</p>
+</div>
+<!-- /.container -->
+</footer>
 
 
 
@@ -124,82 +118,92 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 <script>
+
 var config = {
         type: 'line',
         data: {
-                labels: {{dates}},
+                labels: {{dates|safe}},
                 datasets: [{
                         label: 'Unclassified',
-                        backgroundColor: '#94778B',
+                        backgroundColor: 'rgb(148,119,139, 0.2)',
                         borderColor: '#94778B',
+			pointBackgroundColor: '#94778B',
+			pointBorderColor: '#fff',
+			pointHoverBorderColor: '#94778B',
                         data: [
                                 {% for val in unc %}
                                 {{val.count}},
                                 {% endfor %}
                         ],
-                        fill: false,
+                        fill: 'origin',
                         }, {
                         label: 'Confidential',
-                        backgroundColor: '#A0CCDA',
+                        backgroundColor: 'rgb(160,204,218, 0.2)',
                         borderColor: '#A0CCDA',
                         data: [
                                 {% for val in conf %}
                                 {{val.count}},
                                 {% endfor %}
                         ],
-                        fill: false,
+                        fill: '-1',
                         }, {
                         label: 'Public',
-                        backgroundColor: '#7CE577',
+                        backgroundColor: 'rgb(124,229,119, 0.2)',
                         borderColor: '#7CE577',
+			pointBackgroundColor: '#7CE577',
+			pointBorderColor: '#fff',
+			pointHoverBorderColor: '#7CE577',
                         data: [
                                 {% for val in pub %}
                                 {{val.count}},
                                 {% endfor %}
                         ],
-                        fill: false,
+                        fill: '-1',
                         }, {
                         label: 'Protected A',
-                        backgroundColor: '#E9CE2C',
+                        backgroundColor: 'rgb(233,206,44, 0.2)',
                         borderColor: '#E9CE2C',
                         data: [
                                 {% for val in prota %}
                                 {{val.count}},
                                 {% endfor %}
                         ],
-                        fill: false,
+                        fill: '-1',
                         }, {
                         label: 'Protected B',
-                        backgroundColor: '#DE541E',
+                        backgroundColor: 'rgb(222,84,30, 0.2)',
                         borderColor: '#DE541E',
                         data: [
                                 {% for val in protb %}
                                 {{val.count}},
                                 {% endfor %}
                         ],
-                        fill: false,
+                        fill: '-1',
                         }, {
                         label: 'Protected C',
-			 backgroundColor: '#BF211E',
+			 backgroundColor: 'rgb(191,33,30, 0.2)',
                         borderColor: '#BF211E',
                         data: [
                                 {% for val in protc %}
                                 {{val.count}},
                                 {% endfor %}
                         ],
-                        fill: false,
+                        fill: '-1',
                         }]
                 },
                 options: {
                         elements: {
                         },
                         legend: {
-                                display: false,
+                                display: true,
                                 position: 'right',
                         },
-                        responsive: true,
+                        responsive: false,
                         title: {
                                 display: true,
+				text: 'Past 10 days of Activity',
+				position: 'top',
+				fontSize: '13'
                         },
                         tooltips: {
                                 mode: 'index',
@@ -230,12 +234,51 @@ var config = {
         };
 
 
+piedata = {
+    datasets: [{
+        data: {{data_cons}},
+
+        backgroundColor: [
+                '#A0CCDA',
+                '#7CE577',
+                '#94778B',
+                '#E9CE2C',
+                '#DE541E',
+                '#BF211E'
+        ]
+
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: {{label_cons}}
+};
+
+pieoptions = {
+        legend: {
+                display: true,
+                position: 'right',
+        },
+	title: {
+		display: true,
+		position: 'top',
+		text: 'Breakdown of classifications',
+		fontSize: '13'
+	}
+};
 
 
+var pie = document.getElementById('pieChart').getContext('2d');
+var line = document.getElementById('lineChart').getContext('2d');
 
-var line = document.getElementById('lineChart');
+window.onload = function() {
+	window.myLine = new Chart(line, config);
+	var myDoughnutChart = new Chart(pie, {
+	    type: 'doughnut',
+	    data: piedata,
+	    options: pieoptions
+	});
 
-window.myLine = new Chart(line, config);
+};
 
 
 </script>
