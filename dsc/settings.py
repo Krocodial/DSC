@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'r8k5=$j33t0n-f-97o2v&=4a06a*a+fx1n)sximez5*pr+&3%o') #If key not set in environment use default for dev
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [os.getenv('DJANGO_HOST_IP')]
 
@@ -54,7 +54,7 @@ ROOT_URLCONF = 'dsc.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['classy.templates.admin.classy'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,6 +123,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-MEDIA_URL = 'classy/tmp/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'classy/tmp')
-FILE_UPLOAD_TEMP_DIR = os.path.join(BASE_DIR, 'classy/tmp')
+MEDIA_URL = '/tmp/'
+MEDIA_ROOT = os.path.join('/tmp/')#BASE_DIR, 'tmp/')
+FILE_UPLOAD_TEMP_DIR = os.path.join('/tmp/')#BASE_DIR, 'tmp/')
+
