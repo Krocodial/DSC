@@ -7,7 +7,7 @@ import re
 import multiprocessing, time, signal
 import threading
 import queue, re
-from datetime import datetime, timedelta
+#from datetime import datetime, timedelta
 import pytz
 from django.utils import timezone
 from django.utils.dateparse import *
@@ -27,13 +27,13 @@ def calculate_count(logs, counts):
 	for classi, value in counts.items():
 		new = classification_count(classification_name=classi, count=value, date=today)
 		new.save()
-	for i in range(0, 9):
+	for i in range(1, 60):
 		#s = today - timedelta(days=i)
 		#e = today - timedelta(days=i+1)
-		d = today - timedelta(days=i)
-		dLogs = logs.filter(action_time__contains=d)#action_time__gte=e, action_time__lte=s)
+		d = today - timezone.timedelta(days=i)
+		dLogs = logs.filter(action_time__date=d)#action_time__gte=e, action_time__lte=s)
 		dLogs.order_by('-action_time')
-		print(dLogs)
+		#print(dLogs)
 		for log in dLogs:
 			if log.o_classification not in options:
 				log.delete()
@@ -51,9 +51,9 @@ def calculate_count(logs, counts):
 				counts[log.o_classification] = counts[log.o_classification] + 1
 			else:
 				pass
-		print(counts)
+		#print(counts)
 		for classi, value in counts.items():
-			new = classification_count(classification_name=classi, count=value, date=d-timedelta(days=1))
+			new = classification_count(classification_name=classi, count=value, date=d-timezone.timedelta(days=1))
 			new.save()
 #File for generic scripts
 class parent:

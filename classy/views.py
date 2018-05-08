@@ -29,6 +29,12 @@ threads = []
 lock = threading.Lock()
 sizes = [10, 25, 50, 100]
 
+def tutorial(request):
+	if request.user.is_staff:
+		return render(request, 'classy/tutorial.html')
+	if request.user.is_authenticated:
+		return render(request, 'classy/base_tutorial.html')
+
 def download(request):
 	if not request.user.is_authenticated:
 		return redirect('index')
@@ -104,7 +110,7 @@ def review(request):
 							if tup.classification_name in options:
 
 								item = classification.objects.get(id=tup.classy.id)
-								log = classification_logs(classy = item, action_flag = 1, n_classification = tup.classification_name, o_classification=tup.o_classification, user_id = user, state='Active')
+								log = classification_logs(classy = item, action_flag = 1, n_classification = tup.classification_name, o_classification=tup.o_classification, user_id = user, approved_by = request.user.username, state='Active')
 								item.classification_name = tup.classification_name
 								item.o_classification = tup.o_classification
 								item.state = 'Active'
@@ -114,7 +120,7 @@ def review(request):
 						#delete
 						elif tup.action_flag == 0:
 							item = classification.objects.get(id=tup.classy.id)
-							log = classification_logs(classy = item, action_flag = 0, n_classification = 'N/a', o_classification = tup.o_classification, user_id = user, state='Inactive')
+							log = classification_logs(classy = item, action_flag = 0, n_classification = 'N/a', o_classification = tup.o_classification, user_id = user, approved_by = request.user.username, state='Inactive')
 							item.state = 'Inactive'
 
 							log.save()
@@ -136,10 +142,10 @@ def review(request):
 			except Exception as e:
 				print(e)
 				pass
-
 	queryset = classification_review.objects.all();
 	groups = classification_review_groups.objects.all();
 	queryset = queryset.order_by('group', 'datasource_description', 'schema', 'table_name', 'column_name')
+	
 	context = {'queryset': queryset, 'groups': groups, 'message': message, 'num': num}
 	return render(request, 'classy/review.html', context)
 
@@ -418,12 +424,12 @@ def home(request):
 	label_cons = options#["unclassified", 'public', 'confidential', 'protected a', 'protected b', 'protected c']
 
 	#Line Graph
-	d = datetime.datetime.now() - datetime.timedelta(days=10)
-	#d = timezone.now().date() - timedelta(days=14)
-	linee = classification_count.objects.filter(date__gte=d)
+	#d = datetime.datetime.now() - datetime.timedelta(days=10)
+	d = timezone.now().date() - timezone.timedelta(days=60)
+	linee = classification_count.objects.filter(date__gte=d, classification_name__exact='Unclassified')
 
-	if linee.count() < 10:
-		vals = calculate_count(classification_logs.objects.filter(action_time__gte=d), mapping)
+	if linee.count() < 60:
+		vals = calculate_count(classification_logs.objects.filter(action_time__date__gte=d), mapping)
 		vals = classification_count.objects.filter(date__gte=d)
 	else:
 		vals = linee
@@ -434,7 +440,7 @@ def home(request):
 	for tuple in dat:
 		if str(tuple.date) not in dates:
 			dates.append(str(tuple.date))
-	print(dates)
+	#print(dates)
 	assoc = {}
 	'''
 	unclassified = vals.filter(classification_name__exact='Unclassified').order_by('date')
@@ -451,13 +457,14 @@ def home(request):
 	protected_b = []
 	protected_c = []
 
-	for i in range(0, 10):
-		unclassified.append(random.randrange(i, i+1000))
-		public.append(random.randrange(i, i+1000))
-		confidential.append(random.randrange(i, i+1000))
-		protected_a.append(random.randrange(i, i+1000))
-		protected_b.append(random.randrange(i, i+1000))
-		protected_c.append(random.randrange(i, i+1000))
+	mul = 15
+	for i in range(0, 60):
+		unclassified.append(random.randrange(i*mul, i*mul+1000))
+		public.append(random.randrange(i*mul, i*mul+1000))
+		confidential.append(random.randrange(i*mul, i*mul+1000))
+		protected_a.append(random.randrange(i*mul, i*mul+1000))
+		protected_b.append(random.randrange(i*mul, i*mul+1000))
+		protected_c.append(random.randrange(i*mul, i*mul+1000))
 	#for i in dates:
 	#	days.append(i)
 	#for date in dates:
@@ -504,6 +511,7 @@ def uploader(request):
 					'status': '200',
 					'form': UploadFileForm(),
 					'threads': threads,
+					'num': num
 				}
 				return render(request, 'classy/jobs.html', context)
 			else:
@@ -530,7 +538,8 @@ def uploader(request):
 			context = {
 				'status': '422',
 				'form': UploadFileForm(),
-				'threads': threads
+				'threads': threads,
+				'num': num
 			}
 			return render(request, 'classy/jobs.html', context)
 	except Exception as e:

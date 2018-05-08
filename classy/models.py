@@ -41,7 +41,7 @@ class classification(models.Model):
     )
 
     state = models.CharField(max_length=15, choices=state_choices, null=True)
-
+    summary = models.CharField(max_length=500, null=True)
     #date_added = models.DateTimeField(auto_now_add=True)
     #date_last_updated = models.DateTimeField(auto_now=True)
 class classification_exception(models.Model):
